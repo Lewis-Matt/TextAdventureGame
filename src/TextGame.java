@@ -51,7 +51,14 @@ public class TextGame {
             }
             // FIGHT SEQUENCE
             while (playerHealth > 0 && enemyHealth > 0) {
+                System.out.println("Your enter the arena. Your opponent begins taunting you.");
+                System.out.println("Would you like to attack, or flee(ending the game)? [attack/flee]");
+                if(scanner.next().equalsIgnoreCase("attack")) {
 
+                } else {
+                    System.out.println("You have chosen to runaway to live to fight another day.");
+                    return;
+                }
             }
 
             // USER DOES NOT WANT TO PLAY
@@ -78,8 +85,6 @@ public class TextGame {
             return playerHealth;
         }
     }
-
-    // FLEE LIKE A COWARD METHOD
 
     // RANDOM ENEMY NAME GENERATOR
     public static String randomEnemy() {
