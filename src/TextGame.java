@@ -8,6 +8,7 @@ public class TextGame {
     static double playerAttackMultiplier = 1.0;
     static int enemyHealth = 100;
     static double attackMultiplier = 1.0;
+    static int numberPotions = 2;
 
     // MAIN GAME LOGIC
     public static void game() {
@@ -38,11 +39,19 @@ public class TextGame {
             }
             System.out.printf("%s's health is %s.%n", opponent, enemyHealth);
             System.out.printf("Your health is %s.%n", playerHealth);
-            System.out.println("Would you like to eat a steak (+25 hp buff) or drink mead (1.15 attack modifier)? [steak/mead]");
+            System.out.println("Would you like to eat a steak (+25 hp buff) or drink mead (+15% attack modifier)? [steak/mead]");
             if (scanner.next().equalsIgnoreCase("steak")) {
                 playerHealth += 25;
+                System.out.printf("Yummy! Health is now %s!%n", playerHealth);
             } else if (scanner.next().equalsIgnoreCase("mead")) {
                 playerAttackMultiplier = 1.15;
+                System.out.printf("*Burp* Attack increased to %s!%n", playerAttackMultiplier);
+            } else {
+                System.out.printf("Going in with an empty belly! Health is %s and Attack multiplier is %s.%n", playerHealth, playerAttackMultiplier);
+            }
+            // FIGHT SEQUENCE
+            while (playerHealth > 0 && enemyHealth > 0) {
+
             }
 
             // USER DOES NOT WANT TO PLAY
@@ -55,13 +64,21 @@ public class TextGame {
     public static int attack() {
         // rand.nextInt((max - min) + 1) + min;
         Random rand = new Random();
+        // Attacks for 10-25 hitpoints
         return rand.nextInt((25 - 10) + 1) + 10;
     }
 
     // HEALTH POTION METHOD
     public static int heal() {
-        return playerHealth + 15;
+        if (numberPotions > 0) {
+            numberPotions--;
+            return playerHealth + 10;
+        } else {
+            System.out.println("No more potions!");
+            return playerHealth;
+        }
     }
+
     // FLEE LIKE A COWARD METHOD
 
     // RANDOM ENEMY NAME GENERATOR
