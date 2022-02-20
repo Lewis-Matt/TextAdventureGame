@@ -2,9 +2,12 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class TextGame {
-    int playerHealth = 100;
-    int enemyHealth = 100;
-    double attackMultiplier = 1.0;
+    // DEFAULT VARIABLES
+    // When a variable is declared as static, a single copy of the variable is created and shared at the class level (essentially global to the class)
+    static int playerHealth = 100;
+    static double playerAttackMultiplier = 1.0;
+    static int enemyHealth = 100;
+    static double attackMultiplier = 1.0;
 
     // MAIN GAME LOGIC
     public static void game() {
@@ -15,24 +18,47 @@ public class TextGame {
             System.out.println("WELCOME TO FIGHT CLUB");
             System.out.println("What is your name?");
             String username = scanner.next();
-            System.out.printf("Today you will be fighting %s!", randomEnemy());
-            if(randomEnemy().equals("Zeus")) {
-
+            String opponent = randomEnemy();
+            System.out.printf("%s, today you will be fighting %s!%n", username, opponent);
+            if (opponent.equals("Zeus")) {
+                enemyHealth = 200;
+                attackMultiplier = 1.5;
+            }
+            if (opponent.equals("MacGruber")) {
+                enemyHealth = 75;
+                attackMultiplier = 0.75;
+            }
+            if (opponent.equals("Arnold")) {
+                enemyHealth = 150;
+                attackMultiplier = 1.25;
+            }
+            if (opponent.equals("Red Shirt")) {
+                enemyHealth = 100;
+                attackMultiplier = 0.5;
+            }
+            System.out.printf("%s's health is %s.%n", opponent, enemyHealth);
+            System.out.printf("Your health is %s.%n", playerHealth);
+            System.out.println("Would you like to eat a steak (+25 hp buff) or drink mead (1.15 attack modifier)? [steak/mead]");
+            if (scanner.next().equalsIgnoreCase("steak")) {
+                playerHealth += 25;
+            } else if (scanner.next().equalsIgnoreCase("mead")) {
+                playerAttackMultiplier = 1.15;
             }
 
+            // USER DOES NOT WANT TO PLAY
         } else {
             System.out.println("Okay, return at your leisure (coward).");
         }
     }
 
     // ATTACK METHOD
-    // Random attack on each turn (Player and Enemy)
     public static int attack() {
         // rand.nextInt((max - min) + 1) + min;
         Random rand = new Random();
         return rand.nextInt((25 - 10) + 1) + 10;
     }
-    // BUFFS METHOD
+
+    // HEALTH POTION METHOD
     public static int heal() {
         return playerHealth + 15;
     }
@@ -40,37 +66,25 @@ public class TextGame {
 
     // RANDOM ENEMY NAME GENERATOR
     public static String randomEnemy() {
-        int health;
-        double attackMultiplier;
         String enemy;
-        Random roll = new Random(3);
-        int result = roll.nextInt();
+        Random roll = new Random();
+        int result = roll.nextInt(4);
+        System.out.println(result);
         switch (result) {
             case 1:
                 enemy = "Arnold";
-                enemyHealth = 100;
-                attackMultiplier = 1.15;
                 break;
             case 2:
                 enemy = "MacGruber";
-                health = 75;
-                attackMultiplier = 0.75;
                 break;
             case 3:
                 enemy = "Zeus";
-                health = 200;
-                attackMultiplier = 1.5;
                 break;
             default:
                 enemy = "Red Shirt";
-                health = 50;
-                attackMultiplier = 0.5;
         }
-
+        return enemy;
     }
-
-    // ENEMIES
-
 
     //////////////////////////////////////////////////////////MAIN//////////////////////////////////////////////////////////
     public static void main(String[] args) {
