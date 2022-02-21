@@ -7,7 +7,7 @@ public class TextGame {
     static int playerHealth = 100;
     static double playerAttackMultiplier = 1.0;
     static int enemyHealth = 100;
-    static double attackMultiplier = 1.0;
+    static double enemyAttackMultiplier = 1.0;
     static int numberPotions = 2;
 
     // MAIN GAME LOGIC
@@ -23,19 +23,19 @@ public class TextGame {
             System.out.printf("%s, today you will be fighting %s!%n", username, opponent);
             if (opponent.equals("Zeus")) {
                 enemyHealth = 200;
-                attackMultiplier = 1.5;
+                enemyAttackMultiplier = 1.5;
             }
             if (opponent.equals("MacGruber")) {
                 enemyHealth = 75;
-                attackMultiplier = 0.75;
+                enemyAttackMultiplier = 0.75;
             }
             if (opponent.equals("Arnold")) {
                 enemyHealth = 150;
-                attackMultiplier = 1.25;
+                enemyAttackMultiplier = 1.25;
             }
             if (opponent.equals("Red Shirt")) {
                 enemyHealth = 100;
-                attackMultiplier = 0.5;
+                enemyAttackMultiplier = 0.5;
             }
             System.out.printf("%s's health is %s.%n", opponent, enemyHealth);
             System.out.printf("Your health is %s.%n", playerHealth);
@@ -50,10 +50,24 @@ public class TextGame {
                 System.out.printf("Going in with an empty belly! Health is %s and Attack multiplier is %s.%n", playerHealth, playerAttackMultiplier);
             }
             // FIGHT SEQUENCE
+            System.out.println("Your enter the arena. Your opponent begins taunting you.");
             while (playerHealth > 0 && enemyHealth > 0) {
-                System.out.println("Your enter the arena. Your opponent begins taunting you.");
+
                 System.out.println("Would you like to attack, or flee(ending the game)? [attack/flee]");
                 if(scanner.next().equalsIgnoreCase("attack")) {
+                    int baseAttack = attack();
+                    System.out.println(baseAttack); // test
+                    int damage = (int) (playerAttackMultiplier * baseAttack);
+                    System.out.println(damage); // test
+                    enemyHealth -= damage;
+                    System.out.printf("You strike %s for -%s damage! %s's health is now %s!%n", opponent, damage, opponent, enemyHealth);
+                    System.out.println("After you attack, your opponent counters!");
+                    baseAttack = attack();
+                    System.out.println(baseAttack); // test
+                    damage = (int) (enemyAttackMultiplier * baseAttack);
+                    System.out.println(damage); // test
+                    playerHealth -= damage;
+                    System.out.printf("%s strikes for -%s damage! Your health is now %s!%n", opponent, damage, playerHealth);
 
                 } else {
                     System.out.println("You have chosen to runaway to live to fight another day.");
